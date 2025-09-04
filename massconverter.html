@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mass Converter</title>
+    <style>
+        body {
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 800px;
+        }
+
+        .converter {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="converter">
+        <h2>Mass Converter</h2>
+        <input type="number" id="amount" placeholder="Enter amount">
+
+        <select id="fromUnit">
+            <option value="kg">Kilograms (kg)</option>
+            <option value="g">Grams (g)</option>
+        </select>
+
+        <div>-- to --</div>
+
+        <select id="toUnit">
+            <option value="g">Grams (g)</option>
+            <option value="kg">Kilograms (kg)</option>
+        </select>
+
+        <button onclick="convert()">Convert</button>
+
+        <div class="result" id="result">0</div>
+    </div>
+
+    <script>
+        function convert() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+
+            if (isNaN(amount)) {
+                document.getElementById('result').innerText = "NaN";
+                return;
+            }
+
+
+            const toGrams = {
+                'kg': amount * 1000,
+                'g': amount
+            };
+
+            const fromGrams = {
+                'kg': (val) => val / 1000,
+                'g': (val) => val,
+            };
+
+
+            const grams = toGrams[fromUnit];
+            const converted = fromGrams[toUnit](grams);
+
+            document.getElementById('result').innerText = converted.toFixed();
+        }
+    </script>
+
+</body>
+
+</html>
